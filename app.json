@@ -1,0 +1,10 @@
+{
+  "name": "A simple Go pingpong service",
+  "description": "Go App to simply store anything sent by server",
+  "keywords": [
+    "go",
+    "sample",
+    "example"
+  ],
+  "website": "http://github.com/heroku/go-getting-started"
+}
