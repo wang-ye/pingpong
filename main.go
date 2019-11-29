@@ -34,12 +34,13 @@ func saveUrl(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
-		stmt, err := db.Prepare("INSERT INTO urls(url) VALUES(?)")
+		stmt, err := db.Prepare("INSERT INTO urls (url) VALUES($1)")
 		if err != nil {
 			c.String(http.StatusInternalServerError,
 				fmt.Sprintf("Error preparing statement: %q", err))
 			return
 		}
+		defer stmt.Close()
 
 		if _, err := stmt.Exec(u.Url); err != nil {
 			c.String(http.StatusInternalServerError,
@@ -81,9 +82,11 @@ func main() {
 	}
 
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+
 	if err != nil {
 		log.Fatalf("Error opening database: %q", err)
 	}
+	defer db.Close()
 
 	router := gin.New()
 	router.Use(gin.Logger())
