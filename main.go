@@ -37,7 +37,7 @@ func saveUrl(db *sql.DB) gin.HandlerFunc {
 		stmt, err := db.Prepare("INSERT INTO urls(url) VALUES(?)")
 		if err != nil {
 			c.String(http.StatusInternalServerError,
-				fmt.Sprintf("Error preparing statement: %q", err)
+				fmt.Sprintf("Error preparing statement: %q", err))
 			return
 		}
 
