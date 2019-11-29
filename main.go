@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	_ "github.com/lib/pq"
 )
 
 
@@ -83,7 +85,7 @@ func main() {
 		c.String(http.StatusOK, string([]byte("**hello world, Max!**")))
 	})
 
-	router.POST("/saveUrl", saveUrl(db))
-	router.POST("/showUrls", showUrls(db))
+	router.POST("/api/saveUrl", saveUrl(db))
+	router.POST("/api/showUrls", showUrls(db))
 	router.Run(":" + port)
 }
