@@ -34,10 +34,12 @@ func saveUrl(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
-		if _, err := db.Exec("INSERT INTO urls VALUES (u.Url)"); err != nil {
-			c.String(http.StatusInternalServerError,
-				fmt.Sprintf("Error inserting url %s: %q", u.Url, err))
-			return
+		if stmt, err := db.Prepare("INSERT INTO urls(url) VALUES(?)"); err != nil {
+			if _, err := stmt.Exec(u.Url); err != nil {
+				c.String(http.StatusInternalServerError,
+					fmt.Sprintf("Error inserting url %s: %q", u.Url, err))
+				return
+			}
 		}
 	}
 
