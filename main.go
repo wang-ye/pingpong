@@ -82,7 +82,6 @@ func main() {
 	}
 
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-
 	if err != nil {
 		log.Fatalf("Error opening database: %q", err)
 	}
@@ -96,6 +95,6 @@ func main() {
 	})
 
 	router.POST("/api/saveUrl", saveUrl(db))
-	router.POST("/api/showUrls", showUrls(db))
+	router.GET("/api/showUrls", showUrls(db))
 	router.Run(":" + port)
 }
